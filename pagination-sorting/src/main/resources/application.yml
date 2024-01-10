@@ -1,0 +1,15 @@
+debug:
+  true
+
+spring:
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://localhost:3306/pagination-sorting
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  #spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
