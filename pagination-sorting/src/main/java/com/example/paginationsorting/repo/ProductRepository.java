@@ -12,7 +12,11 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // The return can be List or Page
-    List<Product> findAllByPrice(double price, Pageable pageable);
+    List<Product> findAllByName(String name, Pageable pageable);
+
+    List<Product> findAllByNameAndPrice(String name, double price, Pageable pageable);
+
+    List<Product> findAllByNameOrderByPrice(String name, Pageable pageable);
 
     Page<Product> findAllByOrderByNameAscPriceAsc(Pageable pageable);
 

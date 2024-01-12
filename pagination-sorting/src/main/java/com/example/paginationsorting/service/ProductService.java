@@ -24,23 +24,49 @@ public class ProductService {
         return productPage;
     }
 
-    public List<Product> listProductsByPrice(int pageNumber, int pageSize, double price) {
+    public List<Product> listProductsByName(int pageNumber, int pageSize, String name) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.findAllByPrice(price, pageRequest);
+        List<Product> products = productRepository.findAllByName(name, pageRequest);
         return products;
     }
 
-    public Page<Product> listProductsSortByNameAndPriceAsc(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("name", "price").ascending());
+    public List<Product> listProductsByNameAndPrice(int pageNumber, int pageSize, String name, double price) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        List<Product> products = productRepository.findAllByNameAndPrice(name, price, pageRequest);
+        return products;
+    }
+
+    public List<Product> listProductsByNameOrderByPrice(int pageNumber, int pageSize, String name) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        List<Product> products = productRepository.findAllByNameOrderByPrice(name, pageRequest);
+        return products;
+    }
+
+    public List<Product> listProductsByNameOrderByPrice2(int pageNumber, int pageSize, String name) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by("price").ascending());
+        List<Product> products = productRepository.findAllByName(name, pageRequest);
+        return products;
+    }
+
+    public Page<Product> listProductsOrderByNameAndPriceAsc(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         return productRepository.findAllByOrderByNameAscPriceAsc(pageRequest);
     }
 
-    public List<Product> listProductsSortByNameDescAndPriceAsc(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size,
-                Sort.by("name").descending()
-                        .and(Sort.by("price").ascending()));
+    public Page<Product> listProductsOrderByNameAndPriceAsc2(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("name", "price").ascending());
+        return productRepository.findAll(pageRequest);
+    }
+
+    public List<Product> listProductsOrderByByNameDescAndPriceAsc(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         return productRepository.findAllByOrderByNameDescPriceAsc(pageRequest);
     }
 
-
+    public Page<Product> listProductsOrderByByNameDescAndPriceAsc2(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size,
+                Sort.by("name").descending()
+                        .and(Sort.by("price").ascending()));
+        return productRepository.findAll(pageRequest);
+    }
 }

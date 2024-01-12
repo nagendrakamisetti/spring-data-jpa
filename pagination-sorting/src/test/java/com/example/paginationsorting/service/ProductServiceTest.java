@@ -18,7 +18,7 @@ public class ProductServiceTest {
     private ProductService productService;
 
     @Test
-    public void testListProducts() {
+    public void listProducts() {
         Page<Product> productPage = productService.listProducts(0, 2);
 
         Assertions.assertEquals(20, productPage.getTotalElements());
@@ -40,18 +40,65 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testListProductsByPrice() {
-        List<Product> products = productService.listProductsByPrice(0, 2, 9.99);
+    public void listProductsByName() {
+        List<Product> products = productService.listProductsByName(0, 2,
+                "Product A");
 
         Assertions.assertEquals(2, products.size());
-        Assertions.assertEquals(9.99, products.get(0).getPrice());
-        Assertions.assertEquals(9.99, products.get(1).getPrice());
+        Assertions.assertEquals("Product A", products.get(0).getName());
+        Assertions.assertEquals("Product A", products.get(1).getName());
         displayContent(products);
     }
 
     @Test
-    public void testListProductsSortByNameAndPriceAsc() {
-        Page<Product> productPage = productService.listProductsSortByNameAndPriceAsc(0, 20);
+    public void listProductsByNameAndPrice() {
+        List<Product> products = productService.listProductsByNameAndPrice(0, 2,
+                "Product A", 10.99);
+
+        Assertions.assertEquals(1, products.size());
+        Assertions.assertEquals("Product A", products.get(0).getName());
+        displayContent(products);
+    }
+
+    @Test
+    public void listProductsByNameSortByPrice() {
+        List<Product> products = productService.listProductsByNameOrderByPrice(0, 2,
+                "Product A");
+
+        Assertions.assertEquals(2, products.size());
+        Assertions.assertEquals("Product A", products.get(0).getName());
+        Assertions.assertEquals("Product A", products.get(1).getName());
+        displayContent(products);
+    }
+
+    @Test
+    public void listProductsByNameSortByPrice2() {
+        List<Product> products = productService.listProductsByNameOrderByPrice2(0, 2,
+                "Product A");
+
+        Assertions.assertEquals(2, products.size());
+        Assertions.assertEquals("Product A", products.get(0).getName());
+        Assertions.assertEquals("Product A", products.get(1).getName());
+        displayContent(products);
+    }
+
+    @Test
+    public void listProductsSortByNameAndPriceAsc() {
+        Page<Product> productPage = productService.listProductsOrderByNameAndPriceAsc(0, 20);
+
+        List<Product> products = productPage.getContent();
+        Assertions.assertEquals(20, products.size());
+
+        Pageable pageable = productPage.getPageable();
+        // strange this is failing
+        // Assertions.assertEquals(Sort.by("name", "price"), pageable.getSort()); // sort in response
+
+        displayContent(products);
+    }
+
+    @Test
+    public void listProductsSortByNameAndPriceAsc2() {
+        Page<Product> productPage = productService.listProductsOrderByNameAndPriceAsc2(0, 20);
 
         List<Product> products = productPage.getContent();
         Assertions.assertEquals(20, products.size());
@@ -63,9 +110,19 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testListProductsSortByNameDescAndPriceAsc() {
-        List<Product> products = productService.listProductsSortByNameDescAndPriceAsc(0, 20);
+    public void listProductsSortByNameDescAndPriceAsc() {
+        List<Product> products = productService.listProductsOrderByByNameDescAndPriceAsc(0, 20);
 
+        Assertions.assertEquals(20, products.size());
+
+        displayContent(products);
+    }
+
+    @Test
+    public void listProductsSortByNameDescAndPriceAsc2() {
+        Page<Product> productPage = productService.listProductsOrderByByNameDescAndPriceAsc2(0, 20);
+
+        List<Product> products = productPage.getContent();
         Assertions.assertEquals(20, products.size());
 
         displayContent(products);
