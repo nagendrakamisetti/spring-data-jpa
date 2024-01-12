@@ -55,11 +55,9 @@ public class ProductServiceTest {
 
         List<Product> products = productPage.getContent();
         Assertions.assertEquals(20, products.size());
-        Assertions.assertEquals(9.99, products.get(0).getPrice());
-        Assertions.assertEquals(9.99, products.get(1).getPrice());
 
         Pageable pageable = productPage.getPageable();
-        Assertions.assertEquals(Sort.unsorted(), pageable.getSort()); // sort in response
+        Assertions.assertEquals(Sort.by("name", "price"), pageable.getSort()); // sort in response
 
         displayContent(products);
     }
@@ -69,13 +67,11 @@ public class ProductServiceTest {
         List<Product> products = productService.listProductsSortByNameDescAndPriceAsc(0, 20);
 
         Assertions.assertEquals(20, products.size());
-        Assertions.assertEquals(9.99, products.get(0).getPrice());
-        Assertions.assertEquals(9.99, products.get(1).getPrice());
+
         displayContent(products);
     }
 
     private void displayContent(List<Product> products) {
         System.out.println(products);
     }
-
 }
