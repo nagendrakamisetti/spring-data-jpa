@@ -72,6 +72,7 @@ public class ProductServiceTest {
     }
 
     private void displayContent(List<Product> products) {
-        System.out.println(products);
+        System.out.println("List of products");
+        products.forEach(System.out::println);
     }
 }
