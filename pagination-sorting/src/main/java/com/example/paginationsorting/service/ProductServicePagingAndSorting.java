@@ -10,31 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductService {
+public class ProductServicePagingAndSorting {
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductServicePagingAndSorting(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     private final ProductRepository productRepository;
-
-    public Page<Product> listProducts(int pageNumber, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-        Page<Product> productPage = productRepository.findAll(pageRequest);
-        return productPage;
-    }
-
-    public List<Product> listProductsByName(int pageNumber, int pageSize, String name) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.findAllByName(name, pageRequest);
-        return products;
-    }
-
-    public List<Product> listProductsByNameAndPrice(int pageNumber, int pageSize, String name, double price) {
-        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.findAllByNameAndPrice(name, price, pageRequest);
-        return products;
-    }
 
     public List<Product> listProductsByNameOrderByPrice(int pageNumber, int pageSize, String name) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
